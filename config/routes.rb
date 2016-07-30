@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+
+  root to: "vizualization#home"
+
+  get 'vizualization', to: 'vizualization#home', as: 'home'
+  
+  get 'members', to: 'members#beer', as: 'beer', :defaults => { :format => 'json' }
+  
+  get 'members', to: 'members#state', as: 'state', :defaults =>  { :format => 'json' }
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

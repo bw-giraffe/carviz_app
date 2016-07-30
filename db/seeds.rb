@@ -5,3 +5,9 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+300.times do 
+  Member.create({:name => Faker::Name.name, :state => Faker::Address.state, :beer => Faker::Beer.style})
+end
+
+p "Completed data seed"
