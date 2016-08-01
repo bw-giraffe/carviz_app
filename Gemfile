@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'faker'
 
-gem 'd3-rails'
+gem 'd3_rails'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.5.1'
 # Use postgresql as the database for Active Record
