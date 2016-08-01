@@ -4,26 +4,32 @@ var beerType = "English Pale Ale";
 
 $.ajax({
 	type: "GET",
-	url: '/members/beer'
+	url: '/members/beer/',
 	dataType: 'json',
 	data: {
-		beer: beerType
+		memberBeer: beerType
 	},
 	success: function (res) {
 		console.log("Found members who like this beer!", res);
+	},
+	error: function(err) {
+		console.log("There was an error", err)
 	}
 });
 
-var state = "Minnesota"
+var memState = "Minnesota";
 
 $.ajax({
 	type: 'GET',
-	url: '/members/state',
+	url: '/members/state/',
 	dataType: 'json',
 	data: {
-		memberState: state 
+		memberState: memState 
 	},
 	success: function(res) {
 		console.log("Found members from this state!", res);
+	},
+	error: function(err) {
+		console.log("There was an error", err)
 	}
 });
