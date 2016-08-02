@@ -14,7 +14,8 @@
 </style>
 
 <h1>Learn more about beer in the USA.</h1>
-<%= select_tag 'state', options_for_select(@states) %>
+<h2 id="current"></h2>
+<%= select_tag 'state', options_for_select(@states), id: 'state_select' %>
 <br>
-<%= select_tag 'beer', options_for_select(@beers) %>
+<%= select_tag 'beer', options_for_select(@beers), id: 'beer_select' %>
 <div id="chart"></div>

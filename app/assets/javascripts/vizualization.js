@@ -1,59 +1,100 @@
-console.log("SANITY CHECK WERQING");
+$(document).ready(function(){
+	console.log("SANITY CHECK WORKING");
+
 
 var beerType = "English Pale Ale";
 
-// $.ajax({
-// 	type: "GET",
-// 	url: '/members/beer/',
-// 	dataType: 'json',
-// 	data: {
-// 		memberBeer: beerType
-// 	},
-// 	success: function (res) {
-// 		console.log("Found members who like this beer!", res);
-// 		draw(res);
-// 	},
-// 	error: function(err) {
-// 		console.log("There was an error", err)
-// 	}
-// });
-var memState = "California";
-
-$.ajax({
-	type: 'GET',
-	url: '/members/state/',
-	dataType: 'json',
-	data: {
-		memberState: memState 
-	},
-	success: function(res) {
-		console.log("Found members from this state!", res);
-		console.log("matching membersz", res.matchingMembers);
-		var synthesizedData = {};
-		res.matchingMembers.forEach(function(elem) {
-			if(synthesizedData[elem.beer] != undefined) {
-				synthesizedData[elem.beer]+=1;
-			} else {
-				synthesizedData[elem.beer] = 1;
-			}
-		});
-		console.log(synthesizedData);
-		array = []
-		for (var key in synthesizedData) {
-			var template = {};
-			template.label = key;
-			template.value = synthesizedData[key];
-			array.push(template);
-		}
-		console.log(array);
-		drawPie(array);
-
-
-	},
-	error: function(err) {
-		console.log("There was an error", err)
-	}
+$('#beer_select').on('change', function(e) {
+	var beer = $(this).val();
+	$('#chart').html("");
+	$('#current').text(beer + " ranking by state");
+  	console.log("selected ", beer);
+  	beerReq(beer);
 });
+
+$('#state_select').on('change', function(e) {
+	var state = $(this).val();
+	$('#chart').html("");
+	$('#current').text(state + " beer favorites");
+	stateReq(state);
+});
+
+
+function beerReq(memBeer) {
+	console.log("membeer", memBeer);
+	$.ajax({
+		type: "GET",
+		url: '/members/beer/',
+		dataType: 'json',
+		data: {
+			memberBeer: memBeer
+		},
+		success: function (res) {
+			console.log("Found members who like this beer!", res);
+			console.log(res.matchingMembers);
+			var synthesizedData = {};
+			res.matchingMembers.forEach(function(elem) {
+				if(synthesizedData[elem.state] != undefined) {
+					synthesizedData[elem.state]+=1;
+				} else {
+					synthesizedData[elem.state] = 1;
+				}
+			});
+			console.log(synthesizedData);
+			array = []
+			for (var key in synthesizedData) {
+				var template = {};
+				template.label = key;
+				template.value = synthesizedData[key];
+				array.push(template);
+			}
+			console.log(array);
+			drawPie(array);
+		},
+		error: function(err) {
+			console.log("There was an error", err)
+		}
+	});
+}
+
+function stateReq(memState) {
+
+	$.ajax({
+		type: 'GET',
+		url: '/members/state/',
+		dataType: 'json',
+		data: {
+			memberState: memState 
+		},
+		success: function(res) {
+			console.log("Found members from this state!", res);
+			console.log("matching membersz", res.matchingMembers);
+			var synthesizedData = {};
+			res.matchingMembers.forEach(function(elem) {
+				if(synthesizedData[elem.beer] != undefined) {
+					synthesizedData[elem.beer]+=1;
+				} else {
+					synthesizedData[elem.beer] = 1;
+				}
+			});
+			console.log(synthesizedData);
+			array = []
+			for (var key in synthesizedData) {
+				var template = {};
+				template.label = key;
+				template.value = synthesizedData[key];
+				array.push(template);
+			}
+			console.log(array);
+			drawPie(array);
+
+
+		},
+		error: function(err) {
+			console.log("There was an error", err)
+		}
+	});
+}
 
 function drawPie(data) {
 	var w = 1000;
@@ -101,5 +142,4 @@ function drawPie(data) {
 
 }
 
-
-
+});
