@@ -1,4 +1,7 @@
 <style>
+#chart {
+	font-size: 12px;
+}
 .arc text {
 	font: 10px sans-serif;
 	text-anchor: middle;
@@ -7,8 +10,11 @@
 .arc path {
 	stroke: #fff;
 }
+
 </style>
 
-<h1> Welcome to the vizualization page, gourl </h1>
-
+<h1>Learn more about beer in the USA.</h1>
+<%= select_tag 'state', options_for_select(@states) %>
+<br>
+<%= select_tag 'beer', options_for_select(@beers) %>
 <div id="chart"></div>

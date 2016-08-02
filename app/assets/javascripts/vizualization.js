@@ -17,7 +17,7 @@ var beerType = "English Pale Ale";
 // 		console.log("There was an error", err)
 // 	}
 // });
-var memState = "Minnesota";
+var memState = "California";
 
 $.ajax({
 	type: 'GET',
@@ -46,7 +46,7 @@ $.ajax({
 			array.push(template);
 		}
 		console.log(array);
-		draw(array);
+		drawPie(array);
 
 
 	},
@@ -55,9 +55,9 @@ $.ajax({
 	}
 });
 
-function draw(data) {
-	var w = 400;
-	var h = 400;
+function drawPie(data) {
+	var w = 1000;
+	var h = 1000;
 	var r = h/2;
 	var color = d3.scale.category20c();
 
@@ -83,13 +83,22 @@ function draw(data) {
 	        return arc(d);
 	    });
 
+	    var getAngle = function (d) {
+    	return (180 / Math.PI * (d.startAngle + d.endAngle) / 2 - 90);
+	};
 	// add the text
 	arcs.append("svg:text").attr("transform", function(d){
 				d.innerRadius = 0;
 				d.outerRadius = r;
-	    return "translate(" + arc.centroid(d) + ")";}).attr("text-anchor", "middle").text( function(d, i) {
-	    return data[i].label;}
-			);
+	    return "translate(" + arc.centroid(d) + ")" +
+                    "rotate(" + getAngle(d) + ")"; }) 
+    .attr("dy", 5) 
+    .style("text-anchor", "start")
+    .text(function(d) { return d.data.label; });
+
+
+
+
 }
 
 
